@@ -23,9 +23,12 @@ export class App extends Component {
         urls: data.urls,
         error: ''
       }))
-      .catch(error => this.setState({ 
-        error: "Sorry, we're unable to retrieve this data." 
-      }))
+      .catch(error => {
+        console.log(error)
+        this.setState({ 
+          error: "Sorry, we're unable to process your submission." 
+        })
+      })
   }
 
   submitNewUrl = (input) => {

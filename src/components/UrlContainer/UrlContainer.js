@@ -3,8 +3,6 @@ import './UrlContainer.css';
 
 const UrlContainer = ({ urls, error }) => {
 
-  console.log(urls);
-
   const urlEls = urls.map(url => {
     return (
       <div className="url" key={url.id}>

@@ -13,6 +13,7 @@ export class App extends Component {
   }
 
   componentDidMount() {
+    console.log("TESTING");
   }
 
   render() {

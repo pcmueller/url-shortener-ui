@@ -14,12 +14,15 @@ export class App extends Component {
   }
 
   componentDidMount() {
-    console.log("TESTING");
     getUrls()
       .then(data => this.setState({
         urls: data.urls,
-        //error
+        error: ''
       }))
+      .catch(error => this.setState({ 
+        error: "Sorry, we're unable to retrieve this data." 
+      }))
+  }
   }
 
   render() {

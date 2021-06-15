@@ -23,8 +23,21 @@ describe('URL Shortener: Page Load', () => {
     cy.get('header').find('h1').should('contain', 'URL Shortener')
   })
 
-  it('Should display form with expected inputs', () => {
-    cy.get('header').find('h1').should('contain', 'URL Shortener')
+  it('Should display form with expected elements', () => {
+    cy.get('form').find('input').eq(0).should('have.attr', 'placeholder', 'Title...')
+    cy.get('form').find('input').eq(1).should('have.attr', 'placeholder', 'URL to Shorten...')
+    cy.get('form').find('input[type=text]').should('have.length', 2)
+    cy.get('form').find('button').should('contain', 'Shorten Please!')
+  })
+
+  it ('Should display text typed into form inputs', () => {
+    cy.get('form').find('input[type=text]').eq(0)
+      .type('some title text')
+    cy.get('form input').eq(0).should('have.attr', 'value', 'some title text')
+
+    cy.get('form').find('input[type=text]').eq(1)
+      .type('some url text')
+    cy.get('form input').eq(1).should('have.attr', 'value', 'some url text')
   })
 
   it('Should display all existing URL elements', () => {

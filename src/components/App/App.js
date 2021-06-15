@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { getUrls } from '../../apiCalls';
+import { addUrl, getUrls } from '../../apiCalls';
 import UrlContainer from '../UrlContainer/UrlContainer';
 import UrlForm from '../UrlForm/UrlForm';
 
@@ -14,6 +14,10 @@ export class App extends Component {
   }
 
   componentDidMount() {
+    this.retrieveAllUrls();
+  }
+
+  retrieveAllUrls = () => {
     getUrls()
       .then(data => this.setState({
         urls: data.urls,
@@ -23,6 +27,16 @@ export class App extends Component {
         error: "Sorry, we're unable to retrieve this data." 
       }))
   }
+
+  submitNewUrl = (input) => {
+    addUrl(input)
+      .then(response => this.setState({
+        urls: [ ...this.state.urls, response ],
+        error: ''
+      }))
+      .catch(error => this.setState({ 
+        error: "Sorry, we're unable to process your submission." 
+      }))
   }
 
   render() {

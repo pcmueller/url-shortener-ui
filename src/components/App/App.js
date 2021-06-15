@@ -34,9 +34,12 @@ export class App extends Component {
         urls: [ ...this.state.urls, response ],
         error: ''
       }))
-      .catch(error => this.setState({ 
-        error: "Sorry, we're unable to process your submission." 
-      }))
+      .catch(error => {
+        console.log(error)
+        this.setState({ 
+          error: "Sorry, we're unable to process your submission." 
+        })
+      })
   }
 
   render() {
@@ -47,7 +50,7 @@ export class App extends Component {
           <UrlForm submitNewUrl={this.submitNewUrl} />
         </header>
 
-        <UrlContainer urls={this.state.urls}/>
+        <UrlContainer urls={this.state.urls} error={this.state.error}/>
       </main>
     );
   }

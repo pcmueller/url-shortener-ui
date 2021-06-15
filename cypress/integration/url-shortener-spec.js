@@ -97,32 +97,63 @@ describe('URL Shortener: Error Handling', () => {
 
   const baseUrl = 'http://localhost:3000';
 
-  before(() => {
-    cy.fixture('mock-data.json')
-      .then((data) => {
-        cy.intercept('GET', 'http://localhost:3001/api/v1/urls', {
-          statusCode: 200,
-          body: data
-        })
+  describe('404 Error', () => {
+
+    before(() => {
+      cy.intercept('GET', 'http://localhost:3001/api/v1/urls', {
+        statusCode: 404
       })
 
-    cy.fixture('mock-post-data.json')
-      .then((data) => {
-        cy.intercept('POST', 'http://localhost:3001/api/v1/urls', {
-          statusCode: 200,
-          body: data
-        })
+      cy.visit(baseUrl)
+    })
+
+    it ('Should see an error message', () => {
+      cy.get('.error').should('contain', 'No urls yet! Find some to shorten!')
+    })
+  }),
+
+  describe('500 Error', () => {
+
+    before(() => {
+      cy.intercept('GET', 'http://localhost:3001/api/v1/urls', {
+        statusCode: 500
       })
 
-    cy.visit(baseUrl);
-  })
+      cy.visit(baseUrl)
+    })
 
-  it('', () => {
-    
-  })
+    it ('Should see an error message', () => {
+      cy.get('.error').should('contain', 'No urls yet! Find some to shorten!')
+    })
+  }),
 
-  it('', () => {
-    
-  })
+  describe('Form Submission Error', () => {
 
+    before(() => {
+      cy.fixture('mock-data.json')
+        .then((data) => {
+          cy.intercept('GET', 'http://localhost:3001/api/v1/urls', {
+            statusCode: 200,
+            body: data
+          })
+        })
+
+      cy.intercept('POST', 'http://localhost:3001/api/v1/urls', {
+        statusCode: 404
+      })
+
+      cy.visit(baseUrl);
+    })
+
+    it ('Should display error message when attempting to submit with incomplete form inputs', () => {
+      cy.get('form').find('input[type=text]').eq(0)
+        .type('some title text')
+      
+      cy.get('form').get('button').click()
+      
+      cy.get('.error').should('be.visible')
+      cy.get('.error').should('contain', 'Please provide both a title and a URL to shorten!')
+    })
+
+  })
 })

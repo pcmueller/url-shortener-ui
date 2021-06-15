@@ -60,7 +60,7 @@ class UrlForm extends Component {
         </button>
         {this.state.error.length > 0 && 
           <div>
-            <h3>
+            <h3 className='error'>
               {this.state.error}
             </h3>
           </div>

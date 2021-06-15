@@ -1,7 +1,7 @@
 import React from 'react';
 import './UrlContainer.css';
 
-const UrlContainer = ({ urls }) => {
+const UrlContainer = ({ urls, error }) => {
 
   console.log(urls);
 
@@ -17,7 +17,8 @@ const UrlContainer = ({ urls }) => {
 
   return (
     <section>
-      { urlEls.length ? urlEls : <p>No urls yet! Find some to shorten!</p> }
+      { error ? urlEls : <p className='error'>{error}</p> }
+      { urlEls.length ? urlEls : <p className='error'>No urls yet! Find some to shorten!</p> }
     </section>
   )
 }

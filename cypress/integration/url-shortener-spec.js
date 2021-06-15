@@ -14,16 +14,20 @@ describe('URL Shortener: Page Load', () => {
     cy.visit(baseUrl);
   })
 
-
-  it('', () => {
-
+  it('Should load the landing page with the correct URL', () => {
+    cy.get('.App').should('be.visible')
+    cy.url().should('eq', 'http://localhost:3000/')
   })
 
-  it('', () => {
-    
+  it('Should display header and page title', () => {
+    cy.get('header').find('h1').should('contain', 'URL Shortener')
   })
 
-  it('', () => {
+  it('Should display form with expected inputs', () => {
+    cy.get('header').find('h1').should('contain', 'URL Shortener')
+  })
+
+  it('Should display all existing URL elements', () => {
     
   })
 

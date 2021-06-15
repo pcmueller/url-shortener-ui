@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 
 class UrlForm extends Component {
   constructor(props) {
-    super();
+    super(props);
     this.props = props;
     this.state = {
       title: '',
-      urlToShorten: ''
+      urlToShorten: '',
+      error: ''
     };
   }
 
@@ -26,10 +27,11 @@ class UrlForm extends Component {
       title: this.state.title
     }
 
-    console.log("EVENT TARGET: ", e.target);
-    console.log(newUrl);
-
-    this.props.submitNewUrl(newUrl);
+    if (this.state.urlToShorten && this.state.title) {
+      this.props.submitNewUrl(newUrl);
+    } else {
+      this.setState({ error: 'Please provide both a title and a URL to shorten!'})
+    }
 
     this.clearInputs();
   }
@@ -53,14 +55,21 @@ class UrlForm extends Component {
           type='text'
           placeholder='URL to Shorten...'
           name='urlToShorten'
-          rvalue={this.state.urlToShorten}
+          value={this.state.urlToShorten}
           onChange={e => this.handleNameChange(e)}
         />
 
         <button onClick={e => this.handleSubmit(e)}>
           Shorten Please!
         </button>
-      </form>
+        {this.state.error.length > 0 && 
+          <div>
+            <h3>
+              {this.state.error}
+            </h3>
+          </div>
+        }
+        </form>
     )
   }
 }

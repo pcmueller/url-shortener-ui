@@ -40,7 +40,7 @@ describe('URL Shortener: Page Load', () => {
     cy.get('form input').eq(1).should('have.attr', 'value', 'some url text')
   })
 
-  it('Should display all existing URL elements', () => {
+  it('Should display all stored URL elements', () => {
     cy.get('.url').should('have.length', 1)
     cy.get('.url').find('h3').should('contain', 'Awesome photo')
     cy.get('.url').find('a').should('contain', 'http://localhost:3001/useshorturl/1')
@@ -75,18 +75,18 @@ describe('URL Shortener: Form Submission', () => {
   })
 
 
-  it('', () => {
+  it('Should allow user to submit form inputs', () => {
+    cy.get('form').find('input[type=text]').eq(0)
+      .type('#1 Website in USA')
+    cy.get('form input').eq(0).should('have.attr', 'value', '#1 Website in USA')
 
+    cy.get('form').find('input[type=text]').eq(1)
+      .type('https://www.pizzaparty420.com')
+    cy.get('form input').eq(1).should('have.attr', 'value', 'https://www.pizzaparty420.com')
+
+    cy.get('form').get('button').click()
+    cy.get('.url').should('have.length', 2)
   })
-
-  it('', () => {
-    
-  })
-
-  it('', () => {
-    
-  })
-
 })
 
 describe('URL Shortener: Error Handling', () => {

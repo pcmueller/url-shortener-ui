@@ -41,7 +41,11 @@ describe('URL Shortener: Page Load', () => {
   })
 
   it('Should display all existing URL elements', () => {
-    
+    cy.get('.url').should('have.length', 1)
+    cy.get('.url').find('h3').should('contain', 'Awesome photo')
+    cy.get('.url').find('a').should('contain', 'http://localhost:3001/useshorturl/1')
+    cy.get('.url').find('p')
+      .should('contain', 'https://images.unsplash.com/photo-1531898418865-480b7090470f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80')
   })
 
 })

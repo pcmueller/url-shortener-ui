@@ -63,7 +63,7 @@ describe('URL Shortener: Form Submission', () => {
         })
       })
 
-    cy.fixture('mock-data.json')
+    cy.fixture('mock-post-data.json')
       .then((data) => {
         cy.intercept('POST', 'http://localhost:3001/api/v1/urls', {
           statusCode: 200,
@@ -73,7 +73,6 @@ describe('URL Shortener: Form Submission', () => {
 
     cy.visit(baseUrl);
   })
-
 
   it('Should allow user to submit form inputs', () => {
     cy.get('form').find('input[type=text]').eq(0)
@@ -85,7 +84,12 @@ describe('URL Shortener: Form Submission', () => {
     cy.get('form input').eq(1).should('have.attr', 'value', 'https://www.pizzaparty420.com')
 
     cy.get('form').get('button').click()
+
     cy.get('.url').should('have.length', 2)
+
+    cy.get('.url').eq(1).get('h3').should('contain', '#1 Website in USA')
+    cy.get('.url').eq(1).get('a').should('contain', 'http://localhost:3001/useshorturl/2')
+    cy.get('.url').eq(1).get('p').should('contain', 'https://www.pizzaparty420.com')
   })
 })
 
@@ -102,7 +106,7 @@ describe('URL Shortener: Error Handling', () => {
         })
       })
 
-    cy.fixture('mock-data.json')
+    cy.fixture('mock-post-data.json')
       .then((data) => {
         cy.intercept('POST', 'http://localhost:3001/api/v1/urls', {
           statusCode: 200,
@@ -111,11 +115,6 @@ describe('URL Shortener: Error Handling', () => {
       })
 
     cy.visit(baseUrl);
-  })
-
-
-  it('', () => {
-
   })
 
   it('', () => {
